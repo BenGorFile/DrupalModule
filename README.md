@@ -3,9 +3,9 @@
 
 [![Build Status](https://travis-ci.org/BenGorFile/DrupalModule.svg?branch=master)](https://travis-ci.org/BenGorFile/DrupalModule)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/BenGorFile/DrupalModule/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/BenGorFile/DrupalModule/?branch=master)
-[![Total Downloads](https://poser.pugx.org/bengor-file/drupal-module/downloads)](https://packagist.org/packages/bengor-file/drupal-module/)
-[![Latest Stable Version](https://poser.pugx.org/bengor-file/drupal-module/v/stable.svg)](https://packagist.org/packages/bengor-file/drupal-module/)
-[![Latest Unstable Version](https://poser.pugx.org/bengor-file/drupal-module/v/unstable.svg)](https://packagist.org/packages/bengor-file/drupal-module/)
+[![Total Downloads](https://poser.pugx.org/bengor-file/bengor_file/downloads)](https://packagist.org/packages/bengor-file/bengor_file/)
+[![Latest Stable Version](https://poser.pugx.org/bengor-file/bengor_file/v/stable.svg)](https://packagist.org/packages/bengor-file/bengor_file/)
+[![Latest Unstable Version](https://poser.pugx.org/bengor-file/bengor_file/v/unstable.svg)](https://packagist.org/packages/bengor-file/bengor_file/)
 
 ## Requirements
 PHP >= 5.5

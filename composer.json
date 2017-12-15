@@ -1,5 +1,5 @@
 {
-    "name": "bengor-file/drupal-module",
+    "name": "bengor-file/bengor_file",
     "description": "Drupal module to connect BenGorFile and Drupal",
     "keywords": ["file", "drupal", "module", "ddd"],
     "license": "MIT",
