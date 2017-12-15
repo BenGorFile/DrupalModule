@@ -1,0 +1,113 @@
+{#
+    This file is part of the BenGorFile package.
+
+    (c) Beñat Espiña <benatespina@gmail.com>
+    (c) Gorka Laucirica <gorka.lauzirika@gmail.com>
+
+    For the full copyright and license information, please view the LICENSE
+    file that was distributed with this source code.
+#}
+
+<style>
+    .upload-file {
+        max-width: 300px;
+    }
+
+    .upload-file__preview {
+        border-radius: 5px;
+        display: none;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+
+    .upload-file__preview--visible {
+        display: block;
+    }
+
+    .upload-file__error,
+    .upload-file__success {
+        display: none;
+        margin-top: 20px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .upload-file__error {
+        background-color: #f2e2e7;
+        border: 1px solid #f2b8c2;
+        color: #b20008;
+    }
+
+    .upload-file__success {
+        background-color: #dff2d7;
+        border: 1px solid #b1cca6;
+        color: #5b7053;
+    }
+
+    .upload-file__error--visible,
+    .upload-file__success--visible {
+        display: block;
+    }
+</style>
+
+{% set id = element['#id'] %}
+{% set hidden_id = id ~ '_hidden' %}
+{% set src = element['#url'] %}
+{% set name = element['#name'] %}
+{% set value = element['#value'] %}
+{% set success_message = 'The upload is successfully done' %}
+{% set error_message = 'Something goes wrong in the uploading process' %}
+
+<div class="upload-file">
+    <img class="upload-file__preview{% if src is not null %} upload-file__preview--visible{% endif %}" src="{{ src }}"/>
+    <input type="file" id="{{ id }}">
+    <input type="hidden" id="{{ hidden_id }}" value="{{ value }}" name="{{ name }}"/>
+    <div class="upload-file__success">{{ success_message|trans }}</div>
+    <div class="upload-file__error">{{ error_message|trans }}</div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    (function ($) {
+      var resetMessages = function (successNode, errorNode) {
+        successNode.classList.remove('upload-file__success--visible');
+        errorNode.classList.remove('upload-file__success--visible');
+      };
+
+      var uploadFile = function () {
+        var rootNode = this.closest('.upload-file');
+        var hiddenNode = rootNode.querySelector('#{{ hidden_id }}');
+        var previewNode = rootNode.querySelector('.upload-file__preview');
+        var errorNode = rootNode.querySelector('.upload-file__error');
+        var successNode = rootNode.querySelector('.upload-file__success');
+        var data = new FormData();
+
+        if (this.files.length === 0) {
+          return;
+        }
+
+        resetMessages(successNode, errorNode);
+        data.append('file', this.files[0]);
+        previewNode.src = window.URL.createObjectURL(this.files[0]);
+        previewNode.classList.add('upload-file__preview--visible');
+
+        $.ajax({
+          url: '/api/files/upload',
+          type: 'POST',
+          data: data,
+          processData: false,
+          contentType: false,
+        }).done(function (data) {
+          hiddenNode.value = data.id;
+          successNode.classList.add('upload-file__success--visible');
+        }).fail(function () {
+          errorNode.classList.add('upload-file__error--visible');
+        });
+      };
+
+      document.getElementById('{{ id }}').addEventListener('change', uploadFile);
+    })(jQuery)
+  });
+</script>

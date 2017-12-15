@@ -1,0 +1,23 @@
+<?php
+
+/*
+ * This file is part of the BenGorFile package.
+ *
+ * (c) Beñat Espiña <benatespina@gmail.com>
+ * (c) Gorka Laucirica <gorka.lauzirika@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+function bengor_file_theme()
+{
+    $theme['upload_file'] = [
+        'template'       => 'upload_file',
+        'render element' => 'element',
+    ];
+
+    return $theme;
+}
