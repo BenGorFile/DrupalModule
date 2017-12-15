@@ -8,7 +8,7 @@
 
 services:
     bengor_file.http.file_of_id:
-        class: Drupal\domain_file\Http\Client
+        class: Drupal\bengor_file\Http\Client
         arguments:
             - "@http.client"
             - "%bengor_file_endpoints.file_of_id%"
