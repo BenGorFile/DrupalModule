@@ -7,8 +7,17 @@
 # file that was distributed with this source code.
 
 services:
+    bengor_file.http.client:
+        class: Http\Adapter\Guzzle6\Client
+        public: false
+
+    bengor_file.http.message_factory:
+        class: Http\Message\MessageFactory\GuzzleMessageFactory
+        public: false
+
     bengor_file.http.file_of_id:
         class: Drupal\bengor_file\Http\Client
         arguments:
-            - "@http.client"
+            - "@bengor_file.http.client"
+            - "@bengor_file.http.message_factory"
             - "%bengor_file_endpoints.file_of_id%"

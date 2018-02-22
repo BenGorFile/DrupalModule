@@ -14,43 +14,33 @@ declare(strict_types=1);
 
 namespace Drupal\bengor_file\Http;
 
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
 use Http\Client\HttpClient;
+use Http\Message\MessageFactory;
 
 /**
  * @author Beñat Espiña <benatespina@gmail.com>
  */
-class Client
+final class Client
 {
     private $client;
+    private $messageFactory;
     private $url;
 
-    public function __construct(HttpClient $client, string $url)
+    public function __construct(HttpClient $client, MessageFactory $messageFactory, string $url)
     {
         $this->client = $client;
         $this->url = $url;
+        $this->messageFactory = $messageFactory;
     }
 
     public function fileOfId(string $id) : array
     {
-        try {
-            $response = $this->client->sendRequest(
-                new Request(
-                    'GET',
-                    $this->url($id),
-                    ['Content-Type' => 'application/json']
-                )
-            );
+        $request = $this->messageFactory->createRequest('GET', $this->url($id), [
+            'Content-Type' => 'application/json',
+        ]);
+        $response = $this->client->sendRequest($request);
 
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (RequestException $exception) {
-            if ($exception->hasResponse()) {
-                return $exception->getResponse();
-            }
-
-            throw new $exception;
-        }
+        return json_decode($response->getBody()->getContents(), true);
     }
 
     private function url(string $id) : string
